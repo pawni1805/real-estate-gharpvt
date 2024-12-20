@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validation</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fc;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Form Container */
+    .form-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0d243e;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #0d243e;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: border 0.3s;
+    }
+
+    input:focus {
+      border-color: #f05a28;
+      outline: none;
+    }
+
+    .error {
+      color: #e63946;
+      font-size: 12px;
+    }
+
+    button {
+      background-color: #f05a28;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #e5481b;
+    }
+
+    /* Optional: Add spacing between elements */
+    .form-group {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Simple Form Validation</h1>
+    <form id="myForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <span id="nameError" class="error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <span id="emailError" class="error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <span id="passwordError" class="error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age">
+        <span id="ageError" class="error"></span>
+      </div>
+
+      <button type="button" onclick="validateForm()">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      // Clear previous error messages
+      document.getElementById("nameError").textContent = "";
+      document.getElementById("emailError").textContent = "";
+      document.getElementById("passwordError").textContent = "";
+      document.getElementById("ageError").textContent = "";
+
+      let isValid = true;
+
+      // Name validation
+      const name = document.getElementById("name").value.trim();
+      if (name === "") {
+        document.getElementById("nameError").textContent = "Name is required.";
+        isValid = false;
+      }
+
+      // Email validation
+      const email = document.getElementById("email").value.trim();
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (email === "") {
+        document.getElementById("emailError").textContent = "Email is required.";
+        isValid = false;
+      } else if (!emailPattern.test(email)) {
+        document.getElementById("emailError").textContent = "Invalid email format.";
+        isValid = false;
+      }
+
+      // Password validation
+      const password = document.getElementById("password").value.trim();
+      if (password === "") {
+        document.getElementById("passwordError").textContent = "Password is required.";
+        isValid = false;
+      } else if (password.length < 6) {
+        document.getElementById("passwordError").textContent = "Password must be at least 6 characters long.";
+        isValid = false;
+      }
+
+      // Age validation
+      const age = document.getElementById("age").value.trim();
+      if (age === "") {
+        document.getElementById("ageError").textContent = "Age is required.";
+        isValid = false;
+      } else if (isNaN(age) || age <= 0) {
+        document.getElementById("ageError").textContent = "Age must be a positive number.";
+        isValid = false;
+      }
+
+      // If all validations pass
+      if (isValid) {
+        alert("Form submitted successfully!");
+      }
+    }
+  </script>
+</body>
+</html>
